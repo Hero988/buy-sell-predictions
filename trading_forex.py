@@ -5,6 +5,8 @@ from sklearn.preprocessing import MinMaxScaler
 import MetaTrader5 as mt5
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("Agg")  # Use a non-interactive backend for matplotlib
 import mplfinance as mpf
 from dotenv import load_dotenv
 import random
