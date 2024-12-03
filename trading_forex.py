@@ -265,7 +265,7 @@ if __name__ == "__main__":
 
                 if confidence > 0.9:
                     print(f"{confidence} > 0.9 making trade at {datetime.now()} for symbol {symbol}")
-                    execute_trade(symbol, predicted_label, volumen=0.1)
+                    execute_trade(symbol, predicted_label, volumen=1.0)
                     os.makedirs(symbol_folder, exist_ok=True)
                     # Create subfolder structure with the date and hour of day
                     date_folder = latest_time.strftime('%Y-%m-%d')  # e.g., '2024-12-02'
