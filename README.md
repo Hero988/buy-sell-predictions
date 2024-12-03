@@ -1,7 +1,11 @@
 
 # Buy-Sell Predictions
 
-This repository contains code and scripts designed for predicting buy-sell signals in the Forex market. The implementation leverages machine learning models, specifically HuggingFace transformers, for image classification of candlestick chart data.
+This repository contains code and scripts designed for predicting buy-sell signals in the Forex market using a machine learning algorithim. The implementation leverages machine learning models, specifically HuggingFace transformers, for image classification of candlestick chart data.
+
+## Results
+
+You can find a folder called 'results' with the backtest for EURUSD for the past year from 2024-01-02 to 2024-11-29 
 
 ## Features
 
