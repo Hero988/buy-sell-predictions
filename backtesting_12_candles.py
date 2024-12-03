@@ -323,13 +323,31 @@ if __name__ == "__main__":
         #"NZDCAD", "NZDCHF", "NZDJPY"
     ]
 
-    for symbol in symbols:
+    # Example usage
+    for symbol in folder_names:
         print(f'Currently on Pair: {symbol}')
-        # Example usage
-        base_dir = f"{base_directory}/{symbol}"
+        
+        base_dir = f"{base_directory}/{symbol}"  # Source folder
+        new_folder_path = os.path.join(output_folder_main, symbol)  # Destination folder
 
-        new_folder_path = os.path.join(output_folder_main, symbol)
+        # Check if the folder already exists in the output folder
+        if os.path.exists(new_folder_path):
+            print(f"The folder for {symbol} already exists in {output_folder_main}. Moving to the next symbol.")
+            continue  # Skip to the next symbol
+
+        # Create the destination folder if it doesn't exist
         os.makedirs(new_folder_path, exist_ok=True)
+
+        # Create a subfolder with the name of the symbol inside the new_folder_path
+        symbol_subfolder_path = os.path.join(new_folder_path, symbol)
+        os.makedirs(symbol_subfolder_path, exist_ok=True)
+
+        # Copy the contents of the base directory into the new symbol-named subfolder
+        try:
+            shutil.copytree(base_dir, symbol_subfolder_path, dirs_exist_ok=True)
+            print(f"Copied contents from {base_dir} to {symbol_subfolder_path}.")
+        except Exception as e:
+            print(f"Failed to copy folder {base_dir} to {symbol_subfolder_path}. Error: {e}")
 
         predictions_csv_path = os.path.join(new_folder_path, "predictions_results.csv")
         sorted_csv_path = os.path.join(new_folder_path, "sorted_filtered_predictions_results.csv")
