@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import os
+#os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 from sklearn.preprocessing import MinMaxScaler
 import MetaTrader5 as mt5
 from datetime import datetime, timedelta
@@ -16,6 +17,8 @@ from safetensors.torch import load_file
 from PIL import Image
 import torch
 import kagglehub
+import sys
+import shutil
 
 # Load environment variables for MT5 login credentials
 load_dotenv()
@@ -230,27 +233,48 @@ def close_all_positions():
 # Main function
 if __name__ == "__main__":
     symbols = [
-        "EURUSD", #"GBPUSD", "USDCHF", "USDJPY", "USDCAD",
+        "AUDCAD", "USDCAD",  "GBPUSD", "GBPCAD", "EURNZD"
         #"AUDUSD", "AUDNZD", "AUDCAD", "AUDCHF", "AUDJPY",
         #"NZDUSD", "CHFJPY", "EURGBP", "EURAUD", "EURCHF",
-        #"EURJPY", "EURNZD", "EURCAD", "GBPCHF", "GBPJPY",
-        #"CADCHF", "CADJPY", "GBPAUD", "GBPCAD", "GBPNZD",
-        #"NZDCAD", "NZDCHF", "NZDJPY"
+        #"EURJPY", , "EURCAD", "GBPCHF", "GBPJPY",
+        #"CADCHF", "CADJPY", "GBPAUD", "USDCHF", "GBPNZD",
+        #"NZDCAD", "NZDCHF", "NZDJPY", "USDJPY"
     ]
+
+    # USDCAD, GBPUSD, GBPCAD, EURNZD, AUDCAD best so far
 
     id2label = {0: "buy", 1: "sell"}
 
     # Load the model and image processor
     model_name = "facebook/convnext-base-224"
-    config = AutoConfig.from_pretrained(
-        model_name,
-        num_labels=2,
-        id2label=id2label,
-        label2id={v: k for k, v in id2label.items()}
-    )
+    config = AutoConfig.from_pretrained(model_name, num_labels=2, id2label={0: "buy", 1: "sell"}, label2id={"buy": 0, "sell": 1})
 
     model = AutoModelForImageClassification.from_config(config)
+    model.eval()
     image_processor = AutoImageProcessor.from_pretrained(model_name)
+
+    # Check and download the model weights
+    url_for_model = "sulimantadros/hugging_face_model_facebookconvnext-base-224_64/other/default"
+    model_weights_path = "output_latest_model.zip/saved_model_1_no_threshold_based_model_64%/model.safetensors"
+
+    if not os.path.exists(model_weights_path):
+        print("Model weights not found. Downloading...")
+        download_and_extract_model(
+            filename="output_latest_model.zip",
+            filename_output="output_latest_model",
+            url=url_for_model
+        )
+    else:
+        print("Model weights already exist. Skipping download.")
+
+    # Load model weights
+    try:
+        weights = load_file(model_weights_path)
+        model.load_state_dict(weights)
+        print("Model weights loaded successfully.")
+    except Exception as e:
+        print(f"Error loading model weights: {e}")
+        sys.exit(1)
 
     trade_results_folder = 'trade_results'
     os.makedirs(trade_results_folder, exist_ok=True)
@@ -275,9 +299,18 @@ if __name__ == "__main__":
                 predicted_class, confidence, probabilities = predict_image(chart_filename, model, image_processor)
                 predicted_label = id2label.get(predicted_class, "Unknown")
 
+                # Format the confidence to 2 decimal places for clarity
+                formatted_confidence = f"{confidence:.2f}"
+
+                # Create the new filename with the confidence level
+                new_filename = f"{symbol}_{predicted_label}_{formatted_confidence}_{predicted_class}.png"
+
+                # Rename the file
+                os.rename(chart_filename, new_filename)
+
                 if confidence > 0.9:
                     print(f"{confidence} > 0.9 making trade at {datetime.now()} for symbol {symbol}")
-                    execute_trade(symbol, predicted_label, volume=1.0)
+                    execute_trade(symbol, predicted_label, volume=0.2)
                     os.makedirs(symbol_folder, exist_ok=True)
                     # Create subfolder structure with the date and hour of day
                     date_folder = latest_time.strftime('%Y-%m-%d')  # e.g., '2024-12-02'
@@ -288,9 +321,6 @@ if __name__ == "__main__":
 
                     # Create the directories if they don't already exist
                     os.makedirs(data_folder, exist_ok=True)
-
-                    # Save the image to the folder
-                    image_path = os.path.join(data_folder, f"{symbol}.png")
 
                     # Save the recent candles to a CSV file in the same folder
                     candles_csv_path = os.path.join(data_folder, f"{symbol}_candles.csv")
@@ -309,10 +339,11 @@ if __name__ == "__main__":
                         df.to_csv(csv_path, mode='a', header=False, index=False)
                     else:
                         df.to_csv(csv_path, index=False)
-                    os.rename(chart_filename, image_path)
+                    # Move the file to the destination directory
+                    shutil.move(new_filename, data_folder)
                 else:
                     print(f"{confidence} < 0.9 skipping symbol {symbol} with predicted label {predicted_label}")
-                    os.remove(chart_filename)
+                    os.remove(new_filename)
 
         # Add 6 hours to the latest time
         countdown_time = 6 * 60 * 60  # 6 hours in seconds
