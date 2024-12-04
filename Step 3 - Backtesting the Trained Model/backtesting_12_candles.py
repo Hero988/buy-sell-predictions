@@ -302,7 +302,7 @@ if __name__ == "__main__":
 
 
     # Define the base directory
-    base_directory = "output_latest_data_part_multiple.zip/Pairs"
+    base_directory = "C:/Users/Administrator/Desktop/get_forex_data/candlestick_data_backtesting"
 
     # Get the list of folder names
     folder_names = [folder for folder in os.listdir(base_directory) if os.path.isdir(os.path.join(base_directory, folder))]
