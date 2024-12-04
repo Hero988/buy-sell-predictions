@@ -3,6 +3,14 @@
 
 This repository contains code and scripts designed for predicting buy-sell signals in the Forex market using a machine learning algorithim. The implementation leverages machine learning models, specifically HuggingFace transformers, for image classification of candlestick chart data.
 
+## Kaggle Links to Resources for my code
+I set up different kaggle resources as I could not fit it into this github as the size of the data and the model is to much, please see below:
+- Buy and Sell candlesticks: sulimantadros/buy-sell-object-detection-dataset (This dataset is all the data that is collected in the script test_4_object_detection_no_threshold.py, we then use this data to create a randomized training, testing and validation split)
+- Trained Model: sulimantadros/hugging_face_model_facebookconvnext-base-224_64/other/default (This is the trained model that is was trained in the buy_sell_prediction-Using HuggingFace.ipynb code)
+- Backtesting Data (01/01/2024 - 03/12/2024) - link to dataset in kaggle (This is the data that is collected in the test_4_object_detection_no_threshold.py code)
+- Backtesting Results (01/01/2024 - 03/12/2024) - link to dataset in kaggle (These are the results from the backtest using the Backtesting Data which was generated from the backtesting_12_candles.py code)
+- Backtesting Results Custom (01/01/2024 - 03/12/2024) - link to dataset in kaggle (This is the result where we find the best Backtesting Results of the top pairs and combine all the data and create the actual proper backtest which was generated from (enter code here))
+
 ## Results
 
 You can find a folder called 'results' with the backtest for EURUSD for the past year from 2024-01-02 to 2024-11-29 
