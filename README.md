@@ -10,7 +10,7 @@ I set up different kaggle resources as I could not fit it into this github as th
 - Trained Model: [Link to Trained Model](https://www.kaggle.com/models/sulimantadros/hugging_face_model_facebookconvnext-base-224_64) (This is the trained model that is was trained in the buy_sell_prediction-Using HuggingFace.ipynb code)
 - Backtesting Results (01/01/2024 - 03/12/2024) - [link to Dataset](https://www.kaggle.com/datasets/sulimantadros/backtesting-results-01-01-2024-to-03-12-2024) (These are the results from the backtest using the Backtesting Data which was generated from the backtesting_12_candles.py code)
 - Backtesting Data Combined for Top 5 Pairs (01/01/2024 - 03/12/2024) - [Link to Dataset](https://www.kaggle.com/datasets/sulimantadros/backtesting-data-combined-for-top-5-pairs/data) (This is the data that we filter out the top 5 pairs from the Backtesting Data and which is collected in the multiple_forex_pairs_backtest.py code)
-- Backtesting Results For 5 Pairs (01/01/2024 - 03/12/2024) - link to dataset (This is the results from the top 5 pairs altogether, (No stop loss or take profit relying only on the model) so this is the backtest for the code I am currently using in the Using Trained Model to Trade code which is collected in the multiple_forex_pairs_backtest.py code) 
+- Backtesting Results For 5 Pairs (01/01/2024 - 03/12/2024) - [link to dataset](https://www.kaggle.com/datasets/sulimantadros/top-5-pairs-backtest-no-sl-or-tp) (This is the results from the top 5 pairs altogether, (No stop loss or take profit relying only on the model) so this is the backtest for the code I am currently using in the Using Trained Model to Trade code which is collected in the multiple_forex_pairs_backtest.py code) 
 
 ## Steps:
 1. We first collect 2 datasets:
