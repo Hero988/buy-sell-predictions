@@ -20,7 +20,7 @@ I set up different kaggle resources as I could not fit it into this github as th
 3. We then use the Backtest Dataset and the trained model to perform backtests on each pair, the process can be found here: Step 3 - Backtesting the Trained Model
 4. We then find the top 5 pairs from the backtests that we done above, combine them and perform another backtest, the process can be found here: Step 4 - Collecting and Backtesting 5 Best Pairs/multiple_forex_pairs_backtest.py
 5. We finally use those 5 pairs and the added confidence of the above backtests to trade on the live market, this process can be found here: Step 5 - Using Trained Model to Trade/trading_forex.py
-6. In the experimentation phase we test out if we should add the stop loss or take profit or not - I am not experimenting whether we should or should now I am doing this as both trades I took ended up winning but lost in general, this process can also be found here: Step 6 - Experimentation
+6. In the experimentation phase we test out if we should add the stop loss or take profit or not - I am now going to only focus on the model as the backtest for the 5 Pairs shows that it works very well, this process can also be found here: Step 6 - Experimentation
 
 ## Features
 
