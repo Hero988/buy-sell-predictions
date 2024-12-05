@@ -6,10 +6,10 @@ This repository contains code and scripts designed for predicting buy-sell signa
 ## Kaggle Links to Resources for my code
 I set up different kaggle resources as I could not fit it into this github as the size of the data and the model is to much, please see below:
 - Buy and Sell candlesticks: [Link to Dataset](https://www.kaggle.com/datasets/sulimantadros/buy-sell-object-detection-dataset) (This dataset is all the data that is collected in the script test_4_object_detection_no_threshold.py, we then use this data to create a randomized training, testing and validation split)
-- Trained Model: [Link to Trained Model](https://www.kaggle.com/models/sulimantadros/hugging_face_model_facebookconvnext-base-224_64) (This is the trained model that is was trained in the buy_sell_prediction-Using HuggingFace.ipynb code)
 - Backtesting Data (01/01/2024 - 03/12/2024) - [Link to Dataset](https://www.kaggle.com/datasets/sulimantadros/full-data-in-sequences) (This is the data that is collected in the test_4_object_detection_no_threshold.py code)
-- Backtesting Data Combined for Top 5 Pairs (01/01/2024 - 03/12/2024) - Link to Dataset (This is the data that we filter out the top 5 pairs from the Backtesting Data and which is collected in the multiple_forex_pairs_backtest.py code)
+- Trained Model: [Link to Trained Model](https://www.kaggle.com/models/sulimantadros/hugging_face_model_facebookconvnext-base-224_64) (This is the trained model that is was trained in the buy_sell_prediction-Using HuggingFace.ipynb code)
 - Backtesting Results (01/01/2024 - 03/12/2024) - [link to Dataset](https://www.kaggle.com/datasets/sulimantadros/backtesting-results-01-01-2024-to-03-12-2024) (These are the results from the backtest using the Backtesting Data which was generated from the backtesting_12_candles.py code)
+- Backtesting Data Combined for Top 5 Pairs (01/01/2024 - 03/12/2024) - Link to Dataset (This is the data that we filter out the top 5 pairs from the Backtesting Data and which is collected in the multiple_forex_pairs_backtest.py code)
 - Backtesting Results For 5 Pairs (01/01/2024 - 03/12/2024) - link to dataset (This is the results from the top 5 pairs altogether, so this is the backtest for the code I am currently using in the Using Trained Model to Trade code which is collected in the multiple_forex_pairs_backtest.py code)
 
 ## Results
