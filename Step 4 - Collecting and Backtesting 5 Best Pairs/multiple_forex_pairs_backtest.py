@@ -19,11 +19,140 @@ from safetensors.torch import load_file
 import MetaTrader5 as mt5
 from dotenv import load_dotenv
 import time
-from backtesting_12_candles import download_and_extract_model, calculate_profits_and_drawdowns
+from backtesting_12_candles import download_and_extract_model
 
 import os
 import shutil
 import pandas as pd
+
+# Profit and Drawdown Calculations
+# Profit and Drawdown Calculations
+def calculate_profits_and_drawdowns(sorted_df, lot_size, starting_balance, output_folder):
+    # Extract unique symbols from the "Folder" column
+    sorted_df["Symbol"] = sorted_df["Folder"].apply(lambda x: x.split("\\")[-1].split("_")[0])
+    unique_symbols = sorted_df["Symbol"].unique()
+    
+    # Create a dictionary to store points for each symbol
+    symbol_points = {}
+    for symbol in unique_symbols:
+        symbol_info = mt5.symbol_info(symbol)
+        if symbol_info is not None:
+            symbol_points[symbol] = symbol_info.point
+        else:
+            print(f"Symbol info not found for {symbol}. Skipping...")
+    
+    balance = starting_balance
+    profits = []
+    dates = []
+    predicted_labels = []
+    predictions_bool_list = []
+    actual_labels = []
+    folders = []
+    id2label = {0: "buy", 1: "sell"}
+
+    for _, row in sorted_df.iterrows():
+        folder = row["Folder"]
+        pred_class = row["Predicted Class"]
+        symbol = row["Symbol"]
+
+        hist_csv = os.path.join(folder, "historical_data.csv")
+        future_csv = os.path.join(folder, "future_data.csv")
+
+        if not os.path.exists(hist_csv) or not os.path.exists(future_csv):
+            print(f"Missing data in folder: {folder}")
+            continue
+
+        hist_data = pd.read_csv(hist_csv)
+        future_data = pd.read_csv(future_csv)
+
+        # Retrieve point size for the symbol
+        point = symbol_points.get(symbol)
+        if point is None:
+            print(f"Point information missing for symbol: {symbol}. Skipping...")
+            continue
+
+        last_close_hist = hist_data["close"].iloc[-1]
+        last_close_future = future_data["close"].iloc[-1]
+        pred_label = id2label[pred_class]
+
+        # Set stop loss and take profit thresholds
+        stop_loss_limit = -100  # Maximum loss in monetary value
+        take_profit_limit = 200  # Maximum profit in monetary value
+
+        # Initialize profit and trade status
+        profit = 0
+        trade_closed = False
+
+        # Calculate SL and TP based on action
+        sl = last_close_hist - 100 * point if pred_label == "buy" else last_close_hist + 100 * point
+        tp = last_close_hist + 200 * point if pred_label == "buy" else last_close_hist - 200 * point
+
+        # Loop through the future data to check high and low prices
+        for index, row in future_data.iterrows():
+            high_price = row["high"]
+            low_price = row["low"]
+
+            # Check for stop loss or take profit hit
+            if pred_label == "buy":
+                if low_price <= sl:  # Stop loss for buy
+                    profit = stop_loss_limit
+                    trade_closed = True
+                    break
+                elif high_price >= tp:  # Take profit for buy
+                    profit = take_profit_limit
+                    trade_closed = True
+                    break
+            elif pred_label == "sell":
+                if high_price >= sl:  # Stop loss for sell
+                    profit = stop_loss_limit
+                    trade_closed = True
+                    break
+                elif low_price <= tp:  # Take profit for sell
+                    profit = take_profit_limit
+                    trade_closed = True
+                    break
+
+        # If the trade did not hit SL or TP, calculate profit based on final close price
+        if not trade_closed:
+            if pred_label == "buy":
+                profit = (last_close_future - last_close_hist) * lot_size * point  # Profit for buy
+            elif pred_label == "sell":
+                profit = (last_close_hist - last_close_future) * lot_size * point  # Profit for sell
+
+        # Update balance and record trade details
+        balance += profit
+        profits.append(balance)
+        dates.append(future_data["time"].iloc[-1])
+        predicted_labels.append(pred_label)
+        folders.append(folder)
+        actual_labels.append("buy" if last_close_future > last_close_hist else "sell")
+        predictions_bool_list.append((pred_label == "buy" and last_close_future > last_close_hist) or (pred_label == "sell" and last_close_future < last_close_hist))
+
+    # Create results DataFrame
+    results_df = pd.DataFrame({
+        "Date": dates,
+        "Account Balance": profits,
+        "Predicted Label": predicted_labels,
+        "Actual Label": actual_labels,
+        "Folder": folders,
+        "Prediction Correct": predictions_bool_list,
+    })
+
+    # Calculate drawdowns
+    results_df["Drawdown"] = results_df["Account Balance"].cummax() - results_df["Account Balance"]
+    results_df.to_csv(os.path.join(output_folder, "trade_results.csv"), index=False)
+
+    # Plot account balance over time
+    plt.figure(figsize=(12, 6))
+    plt.plot(pd.to_datetime(results_df["Date"]), results_df["Account Balance"], marker="o")
+    plt.title("Account Balance Over Time")
+    plt.xlabel("Date")
+    plt.ylabel("Account Balance")
+    plt.grid()
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_folder, "account_balance_plot.png"))
+
+    return results_df
 
 # Correctly get the file path for the nested pair folders
 def get_pair_filepath(pair_name, base_dir):
@@ -269,7 +398,7 @@ for symbol in folder_names:
     sorted_df.to_csv(sorted_csv_path, index=False)
 
     # Calculate profits and drawdowns
-    results_df = calculate_profits_and_drawdowns(sorted_df, lot_size, starting_balance, new_folder_path, symbol)
+    results_df = calculate_profits_and_drawdowns(sorted_df, lot_size, starting_balance, new_folder_path)
 
     # Visualize a random sequence
     #random_folder = random.choice(sorted_df['Folder'].tolist())
