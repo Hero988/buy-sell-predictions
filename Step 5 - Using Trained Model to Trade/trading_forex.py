@@ -149,8 +149,8 @@ def execute_trade(symbol, predicted_label, volume):
     deviation = 20  # Allowed slippage in points
 
     # Calculate SL and TP
-    sl = price - 100 * point if action == mt5.ORDER_TYPE_BUY else price + 100 * point
-    tp = price + 200 * point if action == mt5.ORDER_TYPE_BUY else price - 200 * point
+    #sl = price - 1000 * point if action == mt5.ORDER_TYPE_BUY else price + 1000 * point
+    #tp = price + 2000 * point if action == mt5.ORDER_TYPE_BUY else price - 2000 * point
 
     # Prepare the trade request
     request = {
@@ -159,8 +159,8 @@ def execute_trade(symbol, predicted_label, volume):
         "volume": volume,
         "type": action,
         "price": price,
-        "sl": sl,
-        "tp": tp,
+        #"sl": sl,
+        #"tp": tp,
         "deviation": deviation,
         "magic": 234000,  # Custom identifier for the trade
         "comment": "Trade executed by script",
