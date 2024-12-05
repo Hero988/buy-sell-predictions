@@ -84,8 +84,10 @@ def calculate_profits_and_drawdowns(sorted_df, lot_size, starting_balance, outpu
         trade_closed = False
 
         # Calculate SL and TP based on action
-        sl = last_close_hist - 100 * point if pred_label == "buy" else last_close_hist + 100 * point
-        tp = last_close_hist + 200 * point if pred_label == "buy" else last_close_hist - 200 * point
+        sl = last_close_hist - 1000 * point if pred_label == "buy" else last_close_hist + 1000 * point
+        tp = last_close_hist + 2000 * point if pred_label == "buy" else last_close_hist - 2000 * point
+
+        """
 
         # Loop through the future data to check high and low prices
         for index, row in future_data.iterrows():
@@ -111,13 +113,13 @@ def calculate_profits_and_drawdowns(sorted_df, lot_size, starting_balance, outpu
                     profit = take_profit_limit
                     trade_closed = True
                     break
-
+        """
         # If the trade did not hit SL or TP, calculate profit based on final close price
         if not trade_closed:
             if pred_label == "buy":
-                profit = (last_close_future - last_close_hist) * lot_size * point  # Profit for buy
+                profit = (last_close_future - last_close_hist) * lot_size  # Profit for buy
             elif pred_label == "sell":
-                profit = (last_close_hist - last_close_future) * lot_size * point  # Profit for sell
+                profit = (last_close_hist - last_close_future) * lot_size  # Profit for sell
 
         # Update balance and record trade details
         balance += profit
