@@ -10,7 +10,7 @@ I set up different kaggle resources as I could not fit it into this github as th
 - Trained Model: [Link to Trained Model](https://www.kaggle.com/models/sulimantadros/hugging_face_model_facebookconvnext-base-224_64) (This is the trained model that is was trained in the buy_sell_prediction-Using HuggingFace.ipynb code)
 - Backtesting Results (01/01/2024 - 03/12/2024) - [link to Dataset](https://www.kaggle.com/datasets/sulimantadros/backtesting-results-01-01-2024-to-03-12-2024) (These are the results from the backtest using the Backtesting Data which was generated from the backtesting_12_candles.py code)
 - Backtesting Data Combined for Top 5 Pairs (01/01/2024 - 03/12/2024) - [Link to Dataset](https://www.kaggle.com/datasets/sulimantadros/backtesting-data-combined-for-top-5-pairs/data) (This is the data that we filter out the top 5 pairs from the Backtesting Data and which is collected in the multiple_forex_pairs_backtest.py code)
-- Backtesting Results For 5 Pairs (01/01/2024 - 03/12/2024) - [link to dataset](https://www.kaggle.com/datasets/sulimantadros/top-5-pairs-backtest-no-sl-or-tp) (This is the results from the top 5 pairs altogether, (No stop loss or take profit relying only on the model) so this is the backtest for the code I am currently using in the Using Trained Model to Trade code which is collected in the multiple_forex_pairs_backtest.py code) 
+- Backtesting Results For 5 Pairs (01/01/2024 - 03/12/2024) - link to dataset (This is the results from the top 5 pairs altogether, (No stop loss or take profit relying only on the model) so this is the backtest for the code I am currently using in the Using Trained Model to Trade code which is collected in the multiple_forex_pairs_backtest.py code) 
 
 ## Steps:
 1. We first collect 2 datasets:
@@ -20,7 +20,6 @@ I set up different kaggle resources as I could not fit it into this github as th
 3. We then use the Backtest Dataset and the trained model to perform backtests on each pair, the process can be found here: Step 3 - Backtesting the Trained Model
 4. We then find the top 5 pairs from the backtests that we done above, combine them and perform another backtest, the process can be found here: Step 4 - Collecting and Backtesting 5 Best Pairs/multiple_forex_pairs_backtest.py
 5. We finally use those 5 pairs and the added confidence of the above backtests to trade on the live market, this process can be found here: Step 5 - Using Trained Model to Trade/trading_forex.py
-6. In the experimentation phase we test out if we should add the stop loss or take profit or not - I am now going to only focus on the model as the backtest for the 5 Pairs shows that it works very well, this process can also be found here: Step 6 - Experimentation
 
 ## Features
 
