@@ -7,9 +7,10 @@ This repository contains code and scripts designed for predicting buy-sell signa
 I set up different kaggle resources as I could not fit it into this github as the size of the data and the model is to much, please see below:
 - Buy and Sell candlesticks: [Link to Dataset](https://www.kaggle.com/datasets/sulimantadros/buy-sell-object-detection-dataset) (This dataset is all the data that is collected in the script test_4_object_detection_no_threshold.py, we then use this data to create a randomized training, testing and validation split)
 - Trained Model: [Link to Trained Model](https://www.kaggle.com/models/sulimantadros/hugging_face_model_facebookconvnext-base-224_64) (This is the trained model that is was trained in the buy_sell_prediction-Using HuggingFace.ipynb code)
-- Backtesting Data (01/01/2024 - 03/12/2024) - Link to dataset in kaggle (This is the data that is collected in the test_4_object_detection_no_threshold.py code)
+- Backtesting Data (01/01/2024 - 03/12/2024) - [Link to Dataset](https://www.kaggle.com/datasets/sulimantadros/full-data-in-sequences) (This is the data that is collected in the test_4_object_detection_no_threshold.py code)
+- Backtesting Data Combined for Top 5 Pairs (01/01/2024 - 03/12/2024) - Link to Dataset ()
 - Backtesting Results (01/01/2024 - 03/12/2024) - [link to Dataset](https://www.kaggle.com/datasets/sulimantadros/backtesting-results-01-01-2024-to-03-12-2024) (These are the results from the backtest using the Backtesting Data which was generated from the backtesting_12_candles.py code)
-- Backtesting Results Custom (01/01/2024 - 03/12/2024) - link to dataset in kaggle (This is the result where we find the best Backtesting Results of the top pairs and combine all the data and create the actual proper backtest which was generated from (enter code here))
+- Backtesting Results For 5 Pairs (01/01/2024 - 03/12/2024) - link to dataset in kaggle (This is the result where we find the best Backtesting Results of the top pairs and combine all the data and create the actual proper backtest which was generated from (enter code here))
 
 ## Results
 
