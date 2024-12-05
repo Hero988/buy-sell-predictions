@@ -12,9 +12,6 @@ I set up different kaggle resources as I could not fit it into this github as th
 - Backtesting Data Combined for Top 5 Pairs (01/01/2024 - 03/12/2024) - Link to Dataset (This is the data that we filter out the top 5 pairs from the Backtesting Data and which is collected in the multiple_forex_pairs_backtest.py code)
 - Backtesting Results For 5 Pairs (01/01/2024 - 03/12/2024) - link to dataset (This is the results from the top 5 pairs altogether, so this is the backtest for the code I am currently using in the Using Trained Model to Trade code which is collected in the multiple_forex_pairs_backtest.py code)
 
-## Results
-
-You can find a folder called 'results' with the backtest for EURUSD for the past year from 2024-01-02 to 2024-11-29 
 
 ## Features
 
