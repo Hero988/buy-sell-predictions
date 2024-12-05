@@ -12,6 +12,14 @@ I set up different kaggle resources as I could not fit it into this github as th
 - Backtesting Data Combined for Top 5 Pairs (01/01/2024 - 03/12/2024) - Link to Dataset (This is the data that we filter out the top 5 pairs from the Backtesting Data and which is collected in the multiple_forex_pairs_backtest.py code)
 - Backtesting Results For 5 Pairs (01/01/2024 - 03/12/2024) - link to dataset (This is the results from the top 5 pairs altogether, so this is the backtest for the code I am currently using in the Using Trained Model to Trade code which is collected in the multiple_forex_pairs_backtest.py code)
 
+## Steps:
+1. We first collect 2 datasets:
+   - Backtest Dataset, you can see the dataset collection script from the path: Step 1 - Collecting Data/Collecting Backtesting Dataset
+   - Training Testing Validation Dataset(Before Splitting), you can see the Training Testing Validation Dataset script (Before Splitting): Step 1 - Collecting Data/Collecting Training Testing Validation Datasets
+2. We then use the Training Testing Validation Dataset (Before Splitting), convert it into Training Testing Validation folders and train a model, you can see the full process here: Step 2 - Training and Evaluating the Model
+3. We then use the Backtest Dataset and the trained model to perform backtests on each pair, the process can be found here: Step 3 - Backtesting the Trained Model
+4. We then find the top 5 pairs from the backtests that we done above, combine them and perform another backtest, the process can be found here: Step 4 - Collecting and Backtesting 5 Best Pairs/multiple_forex_pairs_backtest.py
+5. We finally use those 5 pairs and the added confidence of the above backtests to trade on the live market, this process can be found here: Step 5 - Using Trained Model to Trade/trading_forex.py
 
 ## Features
 
