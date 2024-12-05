@@ -233,11 +233,11 @@ def close_all_positions():
 # Main function
 if __name__ == "__main__":
     symbols = [
-        "AUDCAD", "USDCAD",  "GBPUSD", "GBPCAD", "EURNZD"
+        "EURNZD", "GBPCAD", "GBPNZD", "AUDCAD", "GBPUSD", 
         #"AUDUSD", "AUDNZD", "AUDCAD", "AUDCHF", "AUDJPY",
         #"NZDUSD", "CHFJPY", "EURGBP", "EURAUD", "EURCHF",
         #"EURJPY", , "EURCAD", "GBPCHF", "GBPJPY",
-        #"CADCHF", "CADJPY", "GBPAUD", "USDCHF", "GBPNZD",
+        #"CADCHF", "CADJPY", "GBPAUD", "USDCHF", "USDCAD",
         #"NZDCAD", "NZDCHF", "NZDJPY", "USDJPY"
     ]
 
@@ -358,4 +358,3 @@ if __name__ == "__main__":
         # Close all open positions
         close_all_positions()
         print("\nRestarting loop...")
-            
